@@ -3,17 +3,14 @@ include_once '../vendor/autoload.php';
 
 $client = new \AutomaterSDK\Client\Client('YOUR_API_KEY', 'YOUR_API_SECRET');
 
-$paymentRequest = new \AutomaterSDK\Request\PaymentRequest();
-$paymentRequest->setPaymentId('TEST-PAYMENT');
-$paymentRequest->setCurrency('EUR');
-$paymentRequest->setAmount(100);
-$paymentRequest->setDescription('TEST API SDK');
-$paymentRequest->setCustom('PAYMENT FROM API');
+// ID of transactions to which you'd like to add note
+$transactionId = 1234;
 
-$cartId = 1234;
+$addNoteToTransaction = new \AutomaterSDK\Request\AddNoteToTransactionRequest();
+$addNoteToTransaction->setNote('Test note : ' . date("Y-m-d H:i:s"));
 
 try {
-    $paymentResponse = $client->postPayment($cartId, $paymentRequest);
+    $addNoteToTransactionResponse = $client->addNoteToTransaction($transactionId, $addNoteToTransaction);
 } catch (\AutomaterSDK\Exception\UnauthorizedException $exception) {
     die('Invalid API key or API secret');
 } catch (\AutomaterSDK\Exception\TooManyRequestsException $exception) {
@@ -25,7 +22,4 @@ try {
     die($exception->getMessage());
 }
 
-echo 'Cart ID: ' . $paymentResponse->getCartId() . '<br>';
-echo 'Currency: ' . $paymentResponse->getCurrency() . '<br>';
-echo 'Amount: ' . $paymentResponse->getAmount() . '<br>';
-echo 'Payment ID: ' . $paymentResponse->getPaymentId() . '<br>';
+echo 'success';

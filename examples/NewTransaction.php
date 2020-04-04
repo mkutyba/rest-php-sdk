@@ -37,6 +37,7 @@ try {
 } catch (\AutomaterSDK\Exception\NotFoundException $exception) {
     die('Not found - invalid params');
 } catch (\AutomaterSDK\Exception\ApiException $exception) {
+    var_dump($exception->getValidationErrors());
     die($exception->getMessage());
 }
 
@@ -45,3 +46,4 @@ echo 'Payment URL: ' . $transactionResponse->getPaymentUrl() . '<br>';
 echo 'Created at: ' . $transactionResponse->getCreatedAt() . '<br>';
 echo 'Currency: ' . $transactionResponse->getOrderCurrency() . '<br>';
 echo 'Amount: ' . $transactionResponse->getOrderAmount() . '<br>';
+echo 'Status URL: ' . $transactionResponse->getStatusUrl() . '<br>';
